@@ -8,11 +8,12 @@
 ````sql
 select count(emp_id) as total_employees -- total num of employees 
 from hr_analytics
+where attrition like 'No'
 ````
 **Results:**
 total_employees|
 ---------------|
-1473|
+1236|
 
 **2.** What is the gender distribution?
 
