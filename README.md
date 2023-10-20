@@ -100,7 +100,7 @@ job_level|avg_income|
 4| 186045.40|
 5| 230301.91|
 
-**3.** What gender earns more?
+**3.** Which gender earns more?
 
 ````sql
 select gender, round(avg(monthly_income * 12),2) as avg_income -
@@ -115,7 +115,7 @@ Male| 76563.39|
 
 **Work-Life Balance** 
 
-**1.** What are the satisfaction levels for all employees?
+**1.** How happy are our employees?
 
 ````sql
 select work_life_balance,
@@ -131,13 +131,86 @@ group by 1
 order by 1 asc
 ````
 **Results:**
-work_life_balance|satisfaction_level|total|
+work_life_balance_rating|satisfaction_level|total|
 |-----------------|------------------|-----|
 1| unsatisfied| 80|
 2| slightly satisfied| 344|
 3| satisfied| 896|
 4| very satisfied| 153|
 
+**2.** Is there any correlation between years worked and work-life balance levels?
+
+````sql
+select work_life_balance, round(avg(years_at_company),1) as avg_years 
+from hr_analytics
+group by 1
+````
+**Results:**
+work_life_balance_rating|avg_years|
+------------------------|---------|
+1| 6.4|
+2| 7.0|
+3| 7.1|
+4| 7.0|
+
+**Employee Tenure** 
+
+**1.** What is the average tenure for all employees by department?
+
+````sql
+select department,round(avg(years_at_company),2) as avg_working_years 
+from hr_analytics
+group by 1
+order by 2 asc
+````
+**Results:**
+department|avg_working_years|
+----------|-----------------|
+Research & Development| 6.86|
+Human Resources| 7.24|
+Sales| 7.28|
+
+**2.** What is the distribution of employees by year?
+
+````sql
+select years_in_current_role_bracket, count(emp_id) as employee_count 
+from hr_analytics
+group by 1
+order by 1 asc
+````
+**Results:**
+years_in_current_role_bracket|employee_count|
+-----------------------------|--------------|
+0-3| 810|
+4-6| 177|
+7-9| 379|
+10-12| 61|
+13+| 46|
+
+**Promotions** 
+
+**1.** What is the average time length since a promotion?
+````sql
+select round(avg(years_since_last_promotion),1) as avg_year_since_last_promo 
+from hr_analytics
+````
+**Results**
+avg_year_since_last_promo|
+-------------------------|
+2.2|
+
+**2.** What is the average time length since a promotion by rating?
+````sql
+SELECT performance_rating, round(avg(years_since_last_promotion),1) as avg_year_since_last_promo 
+from hr_analytics
+group by 1
+order by 1
+````
+**Results**
+performance_rating| avg_year_since_last_promo|
+------------------|--------------------------|
+3| 2.2|
+4| 2.3|
 
 
 
